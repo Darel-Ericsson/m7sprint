@@ -1,0 +1,22 @@
+{% extends 'task/layouts/base.html' %}
+{% load static %}
+{% block title %}Detalles de tareas{% endblock title %}
+{% block header %}
+{% include 'layouts/partials/navbar.html' %}
+    
+{% endblock header %}
+
+{% block sidebar%}
+{% comment %} {% include 'layouts/partials/sidebar.html' %} {% endcomment %}
+{% endblock sidebar%}
+
+{% block content %}
+
+<h2 class=" ps-3 mt-3 modal-title title_modal_custom mb-4" id="exampleModalLabel"><a href=" {% url 'home:task' %} "><span class="material-symbols-outlined">arrow_back_ios_new</span></a> Editar tarea</h2>
+    <form class="forms_style ps-5 pe-5"  method="POST">
+        
+        {% csrf_token %}
+        {{ formEditTask.as_p }}
+        <button  type="submit" class="btn btn-success btn_form">Aplicar Cambios</button>
+    </form>
+{% endblock content %}

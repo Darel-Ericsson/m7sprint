@@ -1,0 +1,71 @@
+{% extends 'task/layouts/base.html' %}
+{% load static %}
+{% block title %}Menú de tareas{% endblock title %}
+
+{% block header %}
+    {% include 'layouts/partials/navbar.html' %}
+    {% comment %} {% include 'task/partials/navTask.html' %} {% endcomment %}
+{% endblock header %}
+
+{% block sidebar %}
+    {% include 'layouts/partials/sidebar.html' %}
+{% endblock sidebar %}
+
+
+{% block content %}
+
+<div class="container position-relative">
+    <h2 class="owner_task_title">{{user.first_name }}, {{title_list}}  </h2>
+        {% include 'task/partials/filterTag.html' %}
+        <br>
+        <div class="row d-flex text-align-center justify-content-center">
+            {% for task in tasks %}
+                <div class="mb-2 p-0 col-3 col-sm-12 col-md-5 col-xl-4 col-xxl-3">
+                    <div class='card mx-1'>
+                        <div class='card-header '>
+                            <h5 class="m-0">{{ task.title }}</h5>
+                        </div>
+                        <div class='card-body'>
+                            <p class="dealine_text"> <strong> Fecha límite:</strong> {{ task.deadline |date:"D d M Y"  }}</p>
+                            <div class="task_info_datail_tags f_d_row">
+                                {% if is_expired %}
+                                    <p class='status_previews_task'>Expirada</p>
+                                {% else %}
+                                    <p class='status_previews_task'>{{ task.status }} ● Prioridad {{ task.task_priority }}</p>
+                                {% endif %}
+                                <span  class=" design_tag badge  bg-secondary" >
+                                    {{ task.task_tag }} 
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex">
+                            <a class="btn btn-sm btn-info m-1 rounded ms-auto" href=" {% url 'home:detail' task.id %} ">Detalles</a>
+                            <a class="btn btn-sm btn-warning m-1 rounded" href=" {% url 'home:edit' task.id %} ">Editar</a>
+                            <a class="btn btn-sm btn-danger m-1 rounded" href="#"  data-bs-toggle="modal" data-bs-target="#deleteTaskModal">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            <div class="modal fade" id="deleteTaskModal"  data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content ">
+                      <div class="modal-header border-0">
+                            <img class="close_modal"   data-bs-dismiss="modal" aria-label="Close" src="{% static 'task/img/back.svg' %}" alt="">
+                      </div>
+                      <div class="modal-body modal_scrollbar">
+                            <form class='forms_style forms_style_alert' action=" {% url 'home:delete' task.id %} ">
+                                <p>¿Está seguro de eliminar esta tarea?</p>
+                                <button class="btn_form btn_form_alert" type="submit">Sí, eliminar tarea.</button>
+                            </form>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% include 'task/partials/modalCreateTask.html' %}
+</div>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'layouts/partials/footer.html' %}
+{% endblock footer %}

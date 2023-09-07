@@ -1,0 +1,68 @@
+{% extends '../layouts/baseLogin.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block header %}
+    <a href=" {% url 'home:task' %} "><img class="logo" width="35" height="35" src=" {% static 'img/logo.svg' %} " alt="Inicio"></a>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+
+        <h2 class="modal-title title_modal_custom mb-4" id="modalLabel">Iniciar sesión</h2>
+        <div id="error-message"></div>
+        <form id="login-form" action="/signin/" class="forms_style" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Usuario</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}" class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
+            <button id="btn-redir" type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
+        </form>
+
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        const loginForm = $('#login-form');
+
+        loginForm.on('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(loginForm[0]);
+
+            $.ajax({
+                url: '/signin/',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // This header is used to identify an AJAX request in Django
+                    'X-CSRFToken': '{{ csrf_token }}' // Include the CSRF token
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // Redirect the parent window
+                        window.parent.location.href = "{% url 'home:task' %}";
+                    } else {
+                        // Handle authentication failure
+                        $('#error-message').text(data.error);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock scripts%}

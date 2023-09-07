@@ -1,0 +1,59 @@
+{% load static %}
+<div class="sidebar flex-shrink-0 rounded h-100 bg-opacity-25">
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li class="rounded-circle mt-3" data-bs-toggle="modal" title="Crear Tareas" data-bs-target="#createTask">
+            <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Crear Tareas" data-bs-original-title="Crear Tareas">
+                <span class="material-symbols-outlined">add_task</span>
+            </a>
+        </li>
+            <li class="rounded-circle position-relative">
+                <span class=" badge rounded-pill position-absolute end-0 bg-info ">
+                    {{pending_tasks}}
+                </span>
+            <a href="{% url 'home:task' %}" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tareas Pendientes" data-bs-original-title="Tareas Pendientes">
+                <span class="material-symbols-outlined ">pending_actions</span>
+            </a>
+        </li>
+
+        <li class="rounded-circle">
+            <form action=" {% url 'home:task' %}" method= "GET" class=' position-relative' >
+                <span class=" badge rounded-pill position-absolute end-0 bg-info ">
+                    {{inprogress_tasks}}
+                </span>
+                <input class="d-none" type="checkbox" name='filter_option' value="inprogress"  id='inprogress' checked>  
+                <button class='btn btn-sm m-0 p-0' type='submit'>
+                    <a  class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tareas en Proceso" data-bs-original-title="Tareas en Proceso">
+                        <span class="material-symbols-outlined">settings_night_sight</span>
+                    </a>
+                </button>
+            </form>
+        </li>
+
+        <li class="rounded-circle">
+            <form action="{% url 'home:task' %}" method= "GET" class=' position-relative'>
+                <span class=" badge rounded-pill position-absolute end-0 bg-info ">
+                    {{completed_tasks}}
+                </span>
+                <input class="d-none" type="checkbox" name='filter_option' value="completed"  id='completed' checked>
+                <button class="btn btn-sm m-0 p-0" type='submit'>
+                    <a class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tareas Completadas" data-bs-original-title="Tareas Completadas">
+                        <span class="material-symbols-outlined">done_outline</span>
+                    </a>
+                </button>
+            </form>
+        </li>
+
+        <li class="rounded-circle">
+            <form action="{% url 'home:task' %}" method= "GET" class=' position-relative'>
+                <span class=" badge rounded-pill position-absolute end-0 bg-info ">
+                    {{expired_tasks}}
+                </span>
+                <input class="d-none" type="checkbox" name='filter_option' value="expired"  id='expired' checked>  
+                <button class="btn btn-sm m-0 p-0" type='submit'>
+                    <a class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Tareas Expiradas" data-bs-original-title="Tareas Expiradas">
+                        <span class="material-symbols-outlined">cancel</span>
+                    </a>
+                </button>
+            </form>
+        </li>
+    </ul>

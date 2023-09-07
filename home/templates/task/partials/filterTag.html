@@ -1,0 +1,20 @@
+<div class='filter_tag'>
+    <button class="btn btn-primary rounded-pill px-3"><a class='design_tag home_tag text-white text-decoration-none'  href="{% url 'home:task' typ=2 %}">Hogar</a></button>
+    <button class="btn btn-success rounded-pill px-3"><a class='design_tag work_tag text-white text-decoration-none'  href="{% url 'home:task' typ=3 %}">Trabajo</a></button>
+    <button class="btn btn-danger rounded-pill px-3"><a class='design_tag study_tag text-white text-decoration-none' href="{% url 'home:task' typ=4 %}">Estudio</a></button>
+    <button class="btn btn-warning rounded-pill px-3"><a class='design_tag sport_tag text-white text-decoration-none' href="{% url 'home:task' typ=5 %}">Deporte</a></button>
+</div>
+
+
+
+{% comment %} <div class="d-flex gap-2 justify-content-center py-5">
+    <button class="btn btn-primary rounded-pill px-3" type="button">Primary</button>
+    <button class="btn btn-secondary rounded-pill px-3" type="button">Secondary</button>
+    <button class="btn btn-success rounded-pill px-3" type="button">Success</button>
+    <button class="btn btn-danger rounded-pill px-3" type="button">Danger</button>
+    <button class="btn btn-warning rounded-pill px-3" type="button">Warning</button>
+    <button class="btn btn-info rounded-pill px-3" type="button">Info</button>
+    <button class="btn btn-light rounded-pill px-3" type="button">Light</button>
+    <button class="btn btn-dark rounded-pill px-3" type="button">Dark</button>
+    <button class="btn btn-link rounded-pill px-3" type="button">Link</button>
+  </div> {% endcomment %}

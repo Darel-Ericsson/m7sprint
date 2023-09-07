@@ -1,0 +1,10 @@
+{% extends 'task/layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <form action="" method='POST'>
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Crear">
+    </form>
+{% endblock content %}
+

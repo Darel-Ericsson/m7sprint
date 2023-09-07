@@ -1,0 +1,33 @@
+{% extends 'task/partials/modalTemplate.html' %}
+{% block modalName %}createTask{% endblock modalName %}
+{% block modalTitle %}Crear Tarea{% endblock modalTitle %}
+{% block headModal %}
+<h2 class="title_modal_Text">Crear Tarea</h2>
+{% endblock headModal %}
+{% block modalBody %}
+    <form class="form forms_style aux_data_input_design " action="{% url 'home:create' user.id %}"  method="POST">
+        {% csrf_token %}
+        {{ formCreateTask.title.label_tag }}
+        {{ formCreateTask.title }}
+        {{ formCreateTask.description.label_tag }}
+        {{ formCreateTask.description }}
+        {% if user.is_superuser %}
+        {{ formCreateTask.task_owner.label_tag }}
+        {{ formCreateTask.task_owner }}
+        {% else %}
+        <label for="id_task_owner">Asignar a (solo admin):</label>
+        <select name="task_owner" class="form-control" required id="id_task_owner" readonly >
+            <option value="{{user.id}}" selected>Mi mismo</option>
+        </select>
+        {% endif %}
+        {{ formCreateTask.task_priority.label_tag }}
+        {{ formCreateTask.task_priority }}
+        {{ formCreateTask.deadline.label_tag }}
+        {{ formCreateTask.deadline }}
+        {{ formCreateTask.task_tag.label_tag }}
+        {{ formCreateTask.task_tag }}
+        <br>
+        <button type="submit" class="btn btn-success btn_form">Crear tarea</button>
+    </form>
+{% endblock modalBody %}
+

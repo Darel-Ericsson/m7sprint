@@ -1,0 +1,92 @@
+{% extends '../layouts/baseLogin.html' %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+
+{% block header %}
+    <a href=" {% url 'home:task' %} "><img class="logo" width="35" height="35" src=" {% static 'img/logo.svg' %}" alt="Inicio"></a>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+
+        <h2 class="modal-title mb-4" id="modalLabel">Crear cuenta</h2>
+        <div id="error-message"></div>
+        <form id="signup-form" class="forms_style" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Usuario</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.first_name.id_for_label }}" class="form-label">Nombres</label>
+                {{ form.first_name }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.last_name.id_for_label }}" class="form-label">Apellidos</label>
+                {{ form.last_name }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">Contraseña</label>
+                {{ form.password1 }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">Repetir Contraseña</label>
+                {{ form.password2 }}
+            </div>
+            <button id="btn-redir" type="submit" class="btn btn-primary btn-lg">Register</button>
+        </form>
+        <div id="form-errors"></div>
+
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const signupForm = $('#signup-form');
+
+        signupForm.on('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(signupForm[0]);
+
+            $.ajax({
+                url: '/signup/',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // Redirect the parent window on successful registration
+                        window.parent.location.href = "{% url 'home:task' %}";
+                    } else {
+                        // Handle registration failure and display form errors
+                        $('#error-message').text('Error in registration.');
+                        $('#form-errors').empty();
+
+                        $.each(data.errors, function(field, errors) {
+                            const errorField = $('<div>').addClass('error-field');
+                            errorField.append($('<strong>').text('Error:'));
+                            const errorList = $('<ul>');
+                            $.each(errors, function(index, error) {
+                                errorList.append($('<li>').text(error));
+                            });
+                            errorField.append(errorList);
+                            $('#form-errors').append(errorField);
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock scripts %}

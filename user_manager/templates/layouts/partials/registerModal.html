@@ -1,0 +1,7 @@
+{% extends 'layouts/partials/modalTemplate.html' %}
+
+{% block name_modal %}registerModal{% endblock name_modal %}
+
+{% block iframe_modal %}
+    <iframe src="{% url 'user_manager:signup' %}" width="100%" height="500px" frameborder="0"></iframe>
+{% endblock iframe_modal %}

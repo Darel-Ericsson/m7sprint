@@ -1,0 +1,15 @@
+{% load static %}
+<!-- Modal -->
+<div class="modal" id= "{% block modalName %} {% endblock modalName %}"  data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content modal_card ">
+      <div class="modal-header d-flex justify-content-between border-0 ">
+            {% block headModal %}{% endblock headModal %}
+            <button class="btn btn-sm"><span class="close_modal material-symbols-outlined" data-bs-dismiss="modal" aria-label="Close">close</span></button>
+      </div>
+      <div class="modal-body modal_scrollbar">
+            {% block modalBody %}{% endblock modalBody %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{% extends 'layouts/partials/modalTemplate.html' %}
+
+{% block name_modal %}loginModal{% endblock name_modal %}
+{% block iframe_modal %}
+    <iframe src="{% url 'user_manager:signin' %}" width="100%" height="300px" frameborder="0"> </iframe>
+{% endblock iframe_modal %}

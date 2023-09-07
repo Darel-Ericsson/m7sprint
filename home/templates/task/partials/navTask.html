@@ -1,0 +1,53 @@
+
+{% load static %}
+<nav class='nav_principal nav_task_manager'>
+
+    {% comment %} <a data-bs-toggle="tooltip" title="Cerrar sesión" href=" {% url 'user_manager:signout' %} "><img class="shape_nav" src=" {% static 'task/img/exit.svg' %} " alt=""></a> {% endcomment %}
+    <div data-bs-toggle="tooltip" title="Crear Tareas" ><img  class="shape_nav" data-bs-toggle="modal" data-bs-target="#createTask" src=" {% static 'task/img/createTask.svg' %} " alt=""></div>
+    
+    
+    <div class="position-relative">
+        <span class="position-absolute top-50 start-0 translate-middle badge rounded-pill task_status_list_count">
+            {{pending_tasks}}
+        </span>
+        <a class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas Pendientes"  href=" {% url 'home:task' %} ">
+        <img class="shape_nav" src=" {% static 'task/img/pendingTask.svg' %} " alt=""></a>
+    </div>
+    
+   
+    <form action=" {% url 'home:task' %}" method= "GET" class='form_fiter_status_task position-relative' >
+        <span class="position-absolute  badge rounded-pill task_status_list_count">
+            {{inprogress_tasks}}
+        </span>
+        <input class="d-none" type="checkbox" name='filter_option' value="inprogress"  id='inprogress' checked>  
+        <button type='submit'  class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas en Proceso">
+            <img  class="shape_nav" src=" {% static 'task/img/progressTask.svg' %} " alt="">
+        </button>
+    </form>
+
+
+    <form action=" {% url 'home:task' %}" method= "GET" class='form_fiter_status_task position-relative'>
+        <span class="position-absolute top-50 start-0 translate-middle badge rounded-pill task_status_list_count">
+            {{completed_tasks}}
+        </span>
+        <input class="d-none" type="checkbox" name='filter_option' value="completed"  id='completed' checked>  
+        <button type='submit'  class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas Completadas">
+            <img  class="shape_nav" src=" {% static 'task/img/completedTask.svg' %} " alt="">
+        </button>
+    </form>
+
+
+    <form   action=" {% url 'home:task' %}" method= "GET" class='form_fiter_status_task position-relative'>
+        <span class="position-absolute top-50 start-0 translate-middle badge rounded-pill task_status_list_count">
+            {{expired_tasks}}
+        </span>
+        <input class="d-none" type="checkbox" name='filter_option' value="expired"  id='completed' checked>  
+        <button type='submit'  class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas Expirada">
+            <img  class="shape_nav" src=" {% static 'task/img/expiredTask.svg' %} " alt="">
+        </button>
+    </form>
+
+
+    {% comment %} <button class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas Completadas" href=""><img class="shape_nav" src=" {% static 'task/img/completedTask.svg' %} " alt=""></button> {% endcomment %}
+    {% comment %} <button class='aux_button_navtask' data-bs-toggle="tooltip" title="Tareas Caducadas"  href=""><img class="shape_nav" src=" {% static 'task/img/expiredTask.svg' %} " alt=""></button> {% endcomment %}
+</nav>
